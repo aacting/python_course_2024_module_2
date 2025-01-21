@@ -13,7 +13,32 @@ BOOKS_DATABASE = [
 
 
 class Book:
+    """
+    Класс, представляющий книгу.
+
+    Атрибуты:
+        id_ (int): Уникальный идентификатор книги.
+        name (str): Название книги.
+        pages (int): Количество страниц в книге.
+
+    Исключения:
+        TypeError: Если id_ не является целым числом, name не является строкой, или pages не является целым числом.
+        ValueError: Если id_ меньше 0 или pages меньше 0.
+    """
+
     def __init__(self, id_: int, name: str, pages: int):
+        """
+        Инициализирует объект книги с заданными параметрами.
+
+        Параметры:
+            id_ (int): Уникальный идентификатор книги.
+            name (str): Название книги.
+            pages (int): Количество страниц в книге.
+
+        Исключения:
+            TypeError: Если id_ не является целым числом, name не является строкой, или pages не является целым числом.
+            ValueError: Если id_ меньше 0 или pages меньше 0.
+        """
         if not isinstance(id_, int):
             raise TypeError('id_ должно быть типа int')
         if id_ < 0:
@@ -29,19 +54,30 @@ class Book:
         self.pages = pages
 
     def __str__(self) -> str:
+        """
+        Возвращает строковое представление книги.
+
+        Возвращает:
+            str: Строка, представляющая книгу в формате 'Книга "название"'.
+        """
         return f'Книга "{self.name}"'
 
     def __repr__(self) -> str:
-        # self.__class__.__name__ вместо явного указания названия класса
+        """
+        Возвращает неформальное строковое представление книги.
+
+        Возвращает:
+            str: Строка, представляющая книгу в формате 'Book(id_=id_, name=name, pages=pages)'.
+        """
         return f'{self.__class__.__name__}(id_={self.id_!r}, name={self.name!r}, pages={self.pages!r})'
 
 
 if __name__ == '__main__':
-    # инициализируем список книг
+    # Инициализируем список книг из базы данных
     list_books = [
         Book(id_=book_dict["id_"], name=book_dict["name"], pages=book_dict["pages"]) for book_dict in BOOKS_DATABASE
     ]
     for book in list_books:
-        print(book)  # проверяем метод __str__
+        print(book)  # Проверяем метод __str__
 
-    print(list_books)  # проверяем метод __repr__
+    print(list_books)  # Проверяем метод __repr__
