@@ -13,6 +13,19 @@ BOOKS_DATABASE = [
 
 
 class Book:
+    """
+    Класс, представляющий книгу.
+
+    Атрибуты:
+        id_ (int): Уникальный идентификатор книги.
+        name (str): Название книги.
+        pages (int): Количество страниц в книге.
+
+    Исключения:
+        TypeError: Если id_ не является целым числом, name не является строкой, или pages не является целым числом.
+        ValueError: Если id_ меньше 0 или pages меньше 0.
+    """
+
     def __init__(self, id_: int, name: str, pages: int):
         if not isinstance(id_, int):
             raise TypeError('id_ должно быть типа int')
@@ -30,12 +43,38 @@ class Book:
 
 
 class Library:
+    """
+    Класс, представляющий библиотеку, содержащую книги.
+
+    Атрибуты:
+        books (list[Book]): Список книг в библиотеке.
+
+    Методы:
+        get_next_book_id(id_: int) -> int: Возвращает следующий доступный идентификатор для новой книги.
+        get_index_by_book_id(id_: int) -> int: Возвращает индекс книги в библиотеке по её идентификатору.
+    """
+
     def __init__(self, books: list[Book] = None):
+        """
+        Инициализирует библиотеку с заданным списком книг.
+
+        Параметры:
+            books (list[Book], optional): Список книг для инициализации библиотеки. По умолчанию пустой список.
+        """
         if books is None:
             books = []
         self.books = books
 
     def get_next_book_id(self, id_: int) -> int:
+        """
+        Возвращает следующий доступный идентификатор для новой книги.
+
+        Параметры:
+            id_ (int): Идентификатор, который будет использоваться для проверки.
+
+        Возвращает:
+            int: Следующий доступный идентификатор книги.
+        """
         if len(self.books) == 0:
             return 1
         else:
@@ -43,11 +82,22 @@ class Library:
 
     @staticmethod
     def get_index_by_book_id(id_: int):
+        """
+        Возвращает индекс книги в библиотеке по её идентификатору.
+
+        Параметры:
+            id_ (int): Идентификатор книги.
+
+        Возвращает:
+            int: Индекс книги в библиотеке.
+
+        Исключения:
+            ValueError: Если книга с запрашиваемым id_ не существует.
+        """
         for identifier, books in enumerate(BOOKS_DATABASE):
             if 'id_' in books and books['id_'] == id_:
                 return identifier
-            else:
-                return ValueError("Книги с запрашиваемым id_ не существует")
+        raise ValueError("Книги с запрашиваемым id_ не существует")
 
 
 if __name__ == '__main__':
